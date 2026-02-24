@@ -122,6 +122,11 @@ void read_uart_data(void)
 
 void app_main(void)
 {
+    gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT);  // dummy load control pin
+    gpio_set_direction(GPIO_NUM_12, GPIO_MODE_OUTPUT);  // Bus control pin
+    gpio_set_direction(GPIO_NUM_36, GPIO_MODE_OUTPUT);  // GW Rx bypass control pin
+    gpio_set_direction(RGB_LED_GPIO, GPIO_MODE_OUTPUT); // GW bypass control pin
+
     uart_setup();
     led_setup();
 
@@ -135,7 +140,7 @@ void app_main(void)
         GW_Tx(IDRequestMsg);
         read_uart_data();
         vTaskDelay(pdMS_TO_TICKS(2000));
-        GW_Bypass();
-        vTaskDelay(pdMS_TO_TICKS(300000));
+        // GW_Bypass();
+        // vTaskDelay(pdMS_TO_TICKS(300000));
     }
 }
