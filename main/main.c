@@ -25,7 +25,7 @@ void led_setup(void);
 void recive_uart_data(void);
 void GW_Bypass();
 void GW_TxRx_En();
-void GW_Tx(const char *message);
+void GW_Tx(const char *message, size_t message_length);
 void read_uart_data(void);
 
 // UART configuration
@@ -96,11 +96,11 @@ void GW_Bypass(void)
     gpio_set_level(GPIO_NUM_36, 1);  // GW Rx bypass
     gpio_set_level(RGB_LED_GPIO, 1); // GW bypass
 }
-void GW_Tx(const char *message)
+void GW_Tx(const char *message, size_t message_length)
 {
     gpio_set_level(GPIO_NUM_12, 0); // Bus controlled by GW TX only
     vTaskDelay(pdMS_TO_TICKS(1));   // delay before sending
-    uart_write_bytes(uart_num, (const char *)message, sizeof(message));
+    uart_write_bytes(uart_num, (const char *)message, message_length);
     vTaskDelay(pdMS_TO_TICKS(60));  // delay after the send (it can be moved to the Tx routine, after finish return GPIO_12 to high)
     gpio_set_level(GPIO_NUM_12, 1); // Bus Controlled by Meter Tx only
 }
@@ -133,11 +133,11 @@ void app_main(void)
     while (1)
     {
         GW_TxRx_En();
-        GW_Tx(BreakCond);
+        GW_Tx(BreakCond, sizeof(BreakCond));
         vTaskDelay(pdMS_TO_TICKS(2000));
-        GW_Tx(BreakCond);
+        GW_Tx(BreakCond, sizeof(BreakCond));
         vTaskDelay(pdMS_TO_TICKS(2000));
-        GW_Tx(IDRequestMsg);
+        GW_Tx(IDRequestMsg, sizeof(IDRequestMsg));
         read_uart_data();
         vTaskDelay(pdMS_TO_TICKS(2000));
         // GW_Bypass();
