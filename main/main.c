@@ -140,7 +140,7 @@ void app_main(void)
         GW_Tx(IDRequestMsg, sizeof(IDRequestMsg));
         read_uart_data();
         vTaskDelay(pdMS_TO_TICKS(2000));
-        // GW_Bypass();
-        // vTaskDelay(pdMS_TO_TICKS(300000));
+        GW_Bypass();
+        vTaskDelay(pdMS_TO_TICKS(300000));
     }
 }
