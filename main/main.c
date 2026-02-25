@@ -84,17 +84,17 @@ void led_blink(void)
 
 void GW_TxRx_En()
 {
-    gpio_set_level(GPIO_NUM_10, 1);  // dummy load enable pin
-    gpio_set_level(GPIO_NUM_12, 1);  // Bus controlled by GW TX only
-    gpio_set_level(GPIO_NUM_36, 0);  // GW Rx bypass
-    gpio_set_level(RGB_LED_GPIO, 0); // GW bypass
+    gpio_set_level(GPIO_NUM_10, 1); // dummy load enable pin
+    gpio_set_level(GPIO_NUM_12, 1); // Bus controlled by GW TX only
+    gpio_set_level(GPIO_NUM_36, 0); // GW Rx bypass
+    gpio_set_level(GPIO_NUM_21, 0); // GW bypass
 }
 
 void GW_Bypass(void)
 {
-    gpio_set_level(GPIO_NUM_10, 0);  // dummy load disable
-    gpio_set_level(GPIO_NUM_36, 1);  // GW Rx bypass
-    gpio_set_level(RGB_LED_GPIO, 1); // GW bypass
+    gpio_set_level(GPIO_NUM_10, 0); // dummy load disable
+    gpio_set_level(GPIO_NUM_36, 1); // GW Rx bypass
+    gpio_set_level(GPIO_NUM_21, 1); // GW bypass
 }
 void GW_Tx(const char *message, size_t message_length)
 {
@@ -122,10 +122,10 @@ void read_uart_data(void)
 
 void app_main(void)
 {
-    gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT);  // dummy load control pin
-    gpio_set_direction(GPIO_NUM_12, GPIO_MODE_OUTPUT);  // Bus control pin
-    gpio_set_direction(GPIO_NUM_36, GPIO_MODE_OUTPUT);  // GW Rx bypass control pin
-    gpio_set_direction(RGB_LED_GPIO, GPIO_MODE_OUTPUT); // GW bypass control pin
+    gpio_set_direction(GPIO_NUM_10, GPIO_MODE_OUTPUT); // dummy load control pin
+    gpio_set_direction(GPIO_NUM_12, GPIO_MODE_OUTPUT); // Bus control pin
+    gpio_set_direction(GPIO_NUM_36, GPIO_MODE_OUTPUT); // GW Rx bypass control pin
+    gpio_set_direction(GPIO_NUM_21, GPIO_MODE_OUTPUT); // GW bypass control pin
 
     uart_setup();
     led_setup();
