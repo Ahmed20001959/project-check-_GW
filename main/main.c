@@ -99,7 +99,7 @@ void GW_Bypass(void)
 void GW_Tx(const char *message, size_t message_length)
 {
     gpio_set_level(GPIO_NUM_12, 0); // Bus controlled by GW TX only
-    vTaskDelay(pdMS_TO_TICKS(1));   // delay before sending
+    vTaskDelay(pdMS_TO_TICKS(20));  // delay before sending
     uart_write_bytes(uart_num, (const char *)message, message_length);
     vTaskDelay(pdMS_TO_TICKS(60));  // delay after the send (it can be moved to the Tx routine, after finish return GPIO_12 to high)
     gpio_set_level(GPIO_NUM_12, 1); // Bus Controlled by Meter Tx only
